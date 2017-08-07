@@ -7,7 +7,7 @@
 
 #import "XPTextView.h"
 
-IB_DESIGNABLE
+
 @interface XPTextView ()
 
 /// 提示占位符标签
@@ -34,6 +34,9 @@ IB_DESIGNABLE
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+#if DEBUG
+    NSLog(@"%s", __FUNCTION__);
+#endif
 }
 
 #pragma mark - Actions
