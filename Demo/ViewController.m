@@ -19,8 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.textView.placeholder = @"Input here...";
-    self.textView.placeholderColor = [UIColor redColor];
+//    self.textView.placeholder = @"Input here...";
+//    self.textView.placeholderColor = [UIColor redColor];
 }
 
 

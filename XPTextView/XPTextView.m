@@ -7,6 +7,7 @@
 
 #import "XPTextView.h"
 
+IB_DESIGNABLE
 @interface XPTextView ()
 
 /// 提示占位符标签
@@ -82,12 +83,12 @@
 
 - (void)setTextAlignment:(NSTextAlignment)textAlignment {
     [super setTextAlignment:textAlignment];
-    _placeholderLabel.textAlignment = textAlignment;
+    self.placeholderLabel.textAlignment = textAlignment;
 }
 
 - (void)setFont:(UIFont *)font {
     [super setFont:font];
-    _placeholderLabel.font = font;
+    self.placeholderLabel.font = font;
 }
 
 - (UILabel *)placeholderLabel {
@@ -104,19 +105,19 @@
 }
 
 - (void)setPlaceholder:(NSString *)placeholder {
-    _placeholderLabel.text = placeholder;
+    self.placeholderLabel.text = placeholder;
 }
 
 - (NSString *)placeholder {
-    return _placeholderLabel.text;
+    return self.placeholderLabel.text;
 }
 
 - (void)setPlaceholderColor:(UIColor *)placeholderColor {
-    _placeholderLabel.textColor = placeholderColor;
+    self.placeholderLabel.textColor = placeholderColor;
 }
 
 - (UIColor *)placeholderColor {
-    return _placeholderLabel.textColor;
+    return self.placeholderLabel.textColor;
 }
 
 @end

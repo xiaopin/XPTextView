@@ -10,8 +10,8 @@
 @interface XPTextView : UITextView
 
 /// 占位符文本
-@property (nonatomic, copy) NSString *placeholder;
+@property (nonatomic, copy) IBInspectable NSString *placeholder;
 /// 占位符文本颜色
-@property (nonatomic, strong) UIColor *placeholderColor;
+@property (nonatomic, strong) IBInspectable UIColor *placeholderColor;
 
 @end
