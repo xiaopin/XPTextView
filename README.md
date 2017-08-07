@@ -6,6 +6,11 @@
 
 给UITextView扩展placelder功能
 
+# Feature
+
+- 支持直接在Storyboard/xib中设置
+- 智能识别placeholder所处位置，避免占位文字紧贴父视图或与光标位置不一致的问题
+
 ## Requirements
 
 - Xcode8.0+
@@ -24,6 +29,10 @@ textView.placeholder = @"Input here...";
 textView.placeholderColor = [UIColor redColor];
 [view addSubview:textView];
 ```
+
+## GIF
+
+![GIF](./demo.gif)
 
 ## License
 
