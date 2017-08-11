@@ -32,6 +32,11 @@
     [self standardInitialization];
 }
 
+- (void)prepareForInterfaceBuilder {
+    [super prepareForInterfaceBuilder];
+    [self standardInitialization];
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if DEBUG

@@ -7,7 +7,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface XPTextView : UITextView
+NS_CLASS_AVAILABLE_IOS(8_0) IB_DESIGNABLE @interface XPTextView : UITextView
 
 /// 占位符文本
 @property (nonatomic, copy) IBInspectable NSString *placeholder;
