@@ -9,12 +9,13 @@
 # Feature
 
 - 支持直接在Storyboard/xib中设置
+- 支持Storyboard/xib实时预览
 - 智能识别placeholder所处位置，避免占位文字紧贴父视图或与光标位置不一致的问题
 
 ## Requirements
 
 - Xcode8.0+
-- iOS7.0+
+- iOS8.0+
 
 ## Usage
 
@@ -30,9 +31,11 @@ textView.placeholderColor = [UIColor redColor];
 [view addSubview:textView];
 ```
 
-## GIF
+## Preview
 
 ![GIF](./demo.gif)
+
+![](./BC966DF2-A727-4282-9D48-233F99FBB9B2.png)
 
 ## License
 
