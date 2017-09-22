@@ -84,6 +84,11 @@
 
 #pragma mark - setter & getter
 
+- (void)setText:(NSString *)text {
+    [super setText:text];
+    [self textDidChangeNotificationAction:nil];
+}
+
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
     [super setTextContainerInset:textContainerInset];
     [self relayoutPlaceholderLabel];
