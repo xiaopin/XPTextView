@@ -48,6 +48,14 @@
 
 - (void)textDidChangeNotificationAction:(NSNotification *)sender {
     _placeholderLabel.hidden = self.hasText;
+    if (_disableReturnCharacter && self.hasText) {
+        NSUInteger index = MAX(0, self.text.length-1);
+        NSString *lastCharacter = [self.text substringFromIndex:index];
+        if ([lastCharacter isEqualToString:@"\n"]) {
+            [self resignFirstResponder];
+            self.text = [self.text substringToIndex:index];
+        }
+    }
 }
 
 #pragma mark - Private
@@ -61,7 +69,7 @@
 - (void)relayoutPlaceholderLabel {
     for (NSLayoutConstraint *layout in self.constraints) {
         if (layout.firstItem == _placeholderLabel) {
-            [self removeConstraint:layout];
+            [layout setActive:NO];
         }
     }
     
@@ -78,8 +86,8 @@
                               };
     NSArray<NSLayoutConstraint *> *horizontalLayout = [NSLayoutConstraint constraintsWithVisualFormat:@"H:|-left-[label(==width)]-right-|" options:0 metrics:metrics views:map];
     NSArray<NSLayoutConstraint *> *verticalLayout = [NSLayoutConstraint constraintsWithVisualFormat:@"V:|-top-[label]-bottom-|" options:0 metrics:metrics views:map];
-    [self addConstraints:horizontalLayout];
-    [self addConstraints:verticalLayout];
+    [NSLayoutConstraint activateConstraints:horizontalLayout];
+    [NSLayoutConstraint activateConstraints:verticalLayout];
 }
 
 #pragma mark - setter & getter
@@ -131,6 +139,11 @@
 
 - (UIColor *)placeholderColor {
     return self.placeholderLabel.textColor;
+}
+
+- (void)setDisableReturnCharacter:(BOOL)disableReturnCharacter {
+    _disableReturnCharacter = disableReturnCharacter;
+    self.returnKeyType = disableReturnCharacter ? UIReturnKeyDone : UIReturnKeyDefault;
 }
 
 @end
