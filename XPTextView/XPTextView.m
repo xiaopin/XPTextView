@@ -52,8 +52,11 @@
         NSUInteger index = MAX(0, self.text.length-1);
         NSString *lastCharacter = [self.text substringFromIndex:index];
         if ([lastCharacter isEqualToString:@"\n"]) {
-            [self resignFirstResponder];
             self.text = [self.text substringToIndex:index];
+            if (self.delegate && [self.delegate respondsToSelector:@selector(textViewDidChange:)]) {
+                [self.delegate textViewDidChange:self];
+            }
+            [self resignFirstResponder];
         }
     }
 }
@@ -94,7 +97,7 @@
 
 - (void)setText:(NSString *)text {
     [super setText:text];
-    [self textDidChangeNotificationAction:nil];
+    _placeholderLabel.hidden = self.hasText;
 }
 
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
