@@ -9,7 +9,7 @@
 # Feature
 
 - 支持直接在Storyboard/xib中设置
-- 支持Storyboard/xib实时预览
+- ~~支持Storyboard/xib实时预览，(由于实时预览功能会导致Xcode在编写代码时候变得卡顿，所以取消该功能)~~
 - 智能识别placeholder所处位置，避免占位文字紧贴父视图或与光标位置不一致的问题
 
 ## Requirements
@@ -34,8 +34,6 @@ textView.placeholderColor = [UIColor redColor];
 ## Preview
 
 ![GIF](./demo.gif)
-
-![](./BC966DF2-A727-4282-9D48-233F99FBB9B2.png)
 
 ## License
 
