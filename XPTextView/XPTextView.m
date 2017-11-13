@@ -48,11 +48,11 @@
 
 - (void)textDidChangeNotificationAction:(NSNotification *)sender {
     _placeholderLabel.hidden = self.hasText;
-    if (_disableReturnCharacter && self.hasText) {
-        NSUInteger index = MAX(0, self.text.length-1);
-        NSString *lastCharacter = [self.text substringFromIndex:index];
-        if ([lastCharacter isEqualToString:@"\n"]) {
-            self.text = [self.text substringToIndex:index];
+    if (_disableReturnCharacter && self.hasText && [self.text containsString:@"\n"]) {
+        NSInteger index = [self offsetFromPosition:self.beginningOfDocument toPosition:self.selectedTextRange.start];
+        NSString *character = [self.text substringWithRange:NSMakeRange(index-1, 1)];
+        if ([character isEqualToString:@"\n"]) {
+            self.text = [[self.text componentsSeparatedByString:@"\n"] componentsJoinedByString:@""];
             if (self.delegate && [self.delegate respondsToSelector:@selector(textViewDidChange:)]) {
                 [self.delegate textViewDidChange:self];
             }
