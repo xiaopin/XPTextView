@@ -37,6 +37,28 @@
     [self standardInitialization];
 }
 
+- (void)insertText:(NSString *)text {
+    if (_disableReturnCharacter && [text isEqualToString:@"\n"]) {
+        // 禁止输入回车符
+        [self resignFirstResponder];
+        return;
+    }
+    [super insertText:text];
+}
+
+- (void)paste:(id)sender {
+    if (_disableReturnCharacter) {
+        NSString *text = [[UIPasteboard generalPasteboard] string];
+        if ([text containsString:@"\n"]) {
+            // 需要从粘贴的字符串中把回车符过滤掉
+            text = [[text componentsSeparatedByString:@"\n"] componentsJoinedByString:@""];
+            [self replaceRange:self.selectedTextRange withText:text];
+            return;
+        }
+    }
+    [super paste:sender];
+}
+
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #if DEBUG
@@ -44,27 +66,10 @@
 #endif
 }
 
-#pragma mark - Actions
-
-- (void)textDidChangeNotificationAction:(NSNotification *)sender {
-    _placeholderLabel.hidden = self.hasText;
-    if (_disableReturnCharacter && self.hasText && [self.text containsString:@"\n"]) {
-        NSInteger index = [self offsetFromPosition:self.beginningOfDocument toPosition:self.selectedTextRange.start];
-        NSString *character = [self.text substringWithRange:NSMakeRange(index-1, 1)];
-        if ([character isEqualToString:@"\n"]) {
-            self.text = [[self.text componentsSeparatedByString:@"\n"] componentsJoinedByString:@""];
-            if (self.delegate && [self.delegate respondsToSelector:@selector(textViewDidChange:)]) {
-                [self.delegate textViewDidChange:self];
-            }
-            [self resignFirstResponder];
-        }
-    }
-}
-
 #pragma mark - Private
 
 - (void)standardInitialization {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textDidChangeNotificationAction:) name:UITextViewTextDidChangeNotification object:self];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(togglePlaceholderLabel) name:UITextViewTextDidChangeNotification object:self];
     [self addSubview:self.placeholderLabel];
     [self relayoutPlaceholderLabel];
 }
@@ -93,11 +98,15 @@
     [NSLayoutConstraint activateConstraints:verticalLayout];
 }
 
+- (void)togglePlaceholderLabel {
+    self.placeholderLabel.hidden = self.hasText;
+}
+
 #pragma mark - setter & getter
 
 - (void)setText:(NSString *)text {
     [super setText:text];
-    _placeholderLabel.hidden = self.hasText;
+    [self togglePlaceholderLabel];
 }
 
 - (void)setTextContainerInset:(UIEdgeInsets)textContainerInset {
